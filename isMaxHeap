@@ -1,0 +1,11 @@
+def isMaxHeap(arr):
+    n = len(arr)
+    for i in range((n - 2) // 2):
+        left = 2 * i + 1
+        right = 2 * i + 2
+        if left < n and arr[i] < arr[left]:
+            return False
+        if left < n and arr[i] < arr[right]:
+            return False
+    return True
+print(isMaxHeap([21,19, 18, 11, 12, 15, 16, 9, 8, 1]))
