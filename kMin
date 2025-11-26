@@ -1,0 +1,27 @@
+def buildTree(arr, i = 0):
+    if i >= len(arr):
+        return None
+    root = TreeNode(arr[i])
+    # рекурсия
+    root.left = buildTree(arr, 2*i + 1)
+    root.right = buildTree(arr, 2*i + 2)
+
+    return root
+def kMin(node, k):
+    stack = []
+    current = node
+    counter = 0
+    while len(stack) > 0 or current:
+        while current:
+            stack.append(current)
+            current = current.left
+        current = stack.pop()
+        counter += 1
+        if counter == k:
+            return current.data
+        current = current.right
+    return None
+
+root = buildTree([21,19, 18, 0, 12, 15, 16, 9, 8, 1])
+
+print(kMin(root,1))
