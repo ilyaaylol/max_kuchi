@@ -1,0 +1,23 @@
+def mirrorTree(node):
+    if not node:
+        return None
+    node.left, node.right = node.right, node.left
+    mirrorTree(node.left)
+    mirrorTree(node.right)
+    return node
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None, balance_factor = None):
+        self.data = val
+        self.left = left
+        self.right = right
+        self.balance_factor = balance_factor
+def printTree(root, level=0, prefix="Root: "):
+
+    if root is not None:
+        print(" " * (level * 4) + prefix + str(root.data))
+        printTree(root.left, level + 1, "L--- ")
+        printTree(root.right, level + 1, "R--- ")
+    return ''
+root = buildTree([21,19, 18, 20, 21])
+print(printTree(root))
+print(printTree(mirrorTree(root)))
