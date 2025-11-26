@@ -1,0 +1,76 @@
+from collections import deque
+import heapq
+""""
+Алгоритм
+"""
+def mergeKsortedArrays(sortedArrays):
+    mergeArray = []
+    minheap = []
+    for i in range(len(sortedArrays)):
+        for j in range(len(sortedArrays[i])):
+            heapq.heappush(minheap, sortedArrays[i][j])
+    while len(minheap) > 0:
+        mergeArray.append(heapq.heappop(minheap))
+    return mergeArray
+
+def isCompleteTree(root):
+    if not root:
+        return True
+    queue = deque([root])
+    shouldBeLeaf = False
+    while queue:
+        node = queue.popleft()
+        if not node:
+            shouldBeLeaf =True
+        else:
+            if shouldBeLeaf:
+                return False
+            queue.append(node.left)
+            queue.append(node.right)
+    return True
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.data = val
+        self.left = left
+        self.right = right
+def isMaxHeap(arr):
+    n = len(arr)
+    for i in range((n - 2) // 2):
+        left = 2 * i + 1
+        right = 2 * i + 2
+        if left < n and arr[i] < arr[left]:
+            return False
+        if left < n and arr[i] < arr[right]:
+            return False
+    return True
+def isMaxHeap_queue(arr):
+    n = len(arr)
+    if n < 1:
+        return True
+    queue = deque([0])
+    while queue:
+        i = queue.popleft()
+        left = 2 * i + 1
+        right = 2 * i + 2
+        if left < n:
+            if arr[i] < arr[left]:
+                return False
+            queue.append(left)
+        if right < n:
+            if arr[i] < arr[right]:
+                return False
+            queue.append(right)
+    return True
+
+def buildTree(arr, i = 0):
+    if i >= len(arr):
+        return None
+    root = TreeNode(arr[i])
+    # рекурсия
+    root.left = buildTree(arr, 2*i + 1)
+    root.right = buildTree(arr, 2*i + 2)
+
+    return root
+root = buildTree([21,19, 18, None, 12, 15, 16, 9, 8, 1])
+
+print(mergeKsortedArrays([[1, 7], [2, 8]]))
